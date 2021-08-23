@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.baizhi.dao.VideoDao">
+
+    <!--手动映射-->
+    <resultMap id="all" type="Video">
+        <!--主属性映射-->
+        <!--<id></id>-->
+        <id column="id" property="id"></id>
+        <!--普通属性映射-->
+        <!--<result></result>-->
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="brief" property="brief"></result>
+        <result column="cover_path" property="coverPath"></result>
+        <result column="video_path" property="videoPath"></result>
+        <result column="create_date" property="createDate"></result>
+        <!--关系属性的映射-->
+        <!--<association property=""></association>-->
+        <association property="category">
+            <id column="category_id" property="id"></id>
+            <!--<result></result>-->
+            <result column="cate_name" property="cate_name"></result>
+        </association>
+        
+        <association property="user">
+            <id column="uid" property="id"></id>
+            <result column="username" property="username"></result>
+        </association>
+    </resultMap>
+
+    <!--//查所有的方法
+    List<Video> queryByPage(@Param("start") int start, @Param("end")-->
+    <select id="queryByPage" resultMap="all">
+        select video.id,title,video.brief,cover_path,video_path,create_date,category_id,user_id,category.cate_name,user.id uid,user.username from
+(select id,title,brief,cover_path,video_path,create_date,category_id,user_id
+from yingx.yx_video limit #{start},#{end}) video
+left join yingx.yx_category category on video.category_id = category.id
+left join yingx.yx_user user on video.user_id = user.id
+    </select>
+    <select id="querySize" resultType="int">
+        select count(*) from yingx.yx_video
+    </select>
+
+<!--//删除  根据id删一个
+    void deleteVideo(String id);-->
+    <delete id="deleteVideo" parameterType="String">
+        delete from yingx.yx_video where id=#{id}
+    </delete>
+
+    <!--//添加
+    void save(Video video);-->
+    <insert id="save" parameterType="Video">
+        insert into yx_video values (#{id},#{title},#{brief},#{coverPath},#{videoPath},#{createDate},#{category.id},#{user.id},#{groupId})
+    </insert>
+
+</mapper>
