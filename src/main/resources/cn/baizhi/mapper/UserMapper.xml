@@ -43,14 +43,14 @@
     <!--//查询注册男神人数
     List<User> quaryMan();-->
     <select id="quaryMan" parameterType="User" resultType="cn.baizhi.vo.MonthAndCount">
-        select month(createdate) month,count(*) count from yx_user where sex="男"
+        select month(createdate) month,count(*) count from yx_user where sex="男神"
         group by month(createdate)
     </select>
 
     <!--//查询注册女神人数
     List<User> quaryWoman();-->
     <select id="quaryWoman" parameterType="User" resultType="cn.baizhi.vo.MonthAndCount">
-        select month(createdate) month,count(*) count from yx_user where sex="女"
+        select month(createdate) month,count(*) count from yx_user where sex="女神"
         group by month(createdate)
     </select>
 
