@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    public void add(MultipartFile photo,String username,String phone,String brief){
+    public void add(MultipartFile photo, String username, String phone, String brief){
         us.add(new User(null, username, phone, "http://tongt123456.oss-cn-beijing.aliyuncs.com/"+photo.getOriginalFilename(), brief, null, new Date(), 0,null));
         File.uploadAliyun(photo);
     }
